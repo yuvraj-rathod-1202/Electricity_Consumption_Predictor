@@ -13,10 +13,13 @@ class DataTypeInspectionStrategy(DataInspectionStrategy):
 
 class DataSummaryInspectionStrategy(DataInspectionStrategy):
     def inspect(self, df):
-        print("\nData Summary (Numeric Feature)")
-        print(df.describe())
-        print("\nData Summary (Categorical Feature)")
-        print(df.describe(include=["O"]))
+        try:
+            print("\nData Summary (Numeric Feature)")
+            print(df.describe())
+            print("\nData Summary (Categorical Feature)")
+            print(df.describe(include=["O"]))
+        except:
+            print("some error")
 
 
 class DataInspector():
