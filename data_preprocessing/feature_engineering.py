@@ -66,6 +66,8 @@ class FeatureEngineer():
             return MinMaxScalling(feature).apply_transformation(df)
         elif type=="OneHotEncodding":
             return OneHotEncodding(feature).apply_transformation(df)
+        elif type=="LogTransformation":
+            return LogTransformation(feature).apply_transformation(df)
 
 if __name__ == "__main__":
     pass
