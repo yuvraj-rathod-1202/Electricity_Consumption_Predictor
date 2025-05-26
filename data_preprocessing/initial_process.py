@@ -1,4 +1,4 @@
-from type_convert import TypeConvert
+from data_preprocessing.type_convert import TypeConvert
 
 import pandas as pd
 

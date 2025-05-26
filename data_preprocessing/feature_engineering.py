@@ -15,7 +15,7 @@ class LogTransformation(FeatureEngineeringStrategy):
 
     def apply_transformation(self, df):
         df_transformed = df.copy()
-        for feature in self.features:
+        for feature in self._feature:
             df_transformed[feature] = np.log1p(
                 df[feature]
             )
