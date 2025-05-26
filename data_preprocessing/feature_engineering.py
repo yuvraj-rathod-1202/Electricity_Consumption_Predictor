@@ -9,6 +9,17 @@ class FeatureEngineeringStrategy(ABC):
     def apply_transformation(self, df):
         pass
 
+class LogTransformation(FeatureEngineeringStrategy):
+    def __init__(self, feature):
+        self._feature = feature
+
+    def apply_transformation(self, df):
+        df_transformed = df.copy()
+        for feature in self.features:
+            df_transformed[feature] = np.log1p(
+                df[feature]
+            )
+        return df_transformed
 
 class StandardScalling(FeatureEngineeringStrategy):
     def __init__(self, feature):
