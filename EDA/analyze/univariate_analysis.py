@@ -13,7 +13,7 @@ class NumericDataAnalysis(UnivariateDataAnalysis):
     def analysis(self, df, feature):
         
         plt.figure(figsize=(10, 6))
-        sns.histplot(df[feature], kde=True, bins=20)
+        sns.histplot(df[feature], kde=True, bins=30)
         plt.title(f"distribution of {feature}")
         plt.xlabel(feature)
         plt.ylabel("frequency")
