@@ -3,6 +3,7 @@ from data_preprocessing.initial_process import InitialProcess
 from data_preprocessing.missing_value_handling import MissingValueHandler, FillMissingValue, DropMissingValue
 from data_preprocessing.feature_engineering import FeatureEngineer
 from data_preprocessing.outliers_detection import OutlierProcessing
+from training.data_splitting import DataSplitter
 
 class TrainingPipeline():
     def training_pipeline(self):
@@ -18,7 +19,7 @@ class TrainingPipeline():
 
         cleaned_data = OutlierProcessing().process_outliers(featured_data, featured_data.columns, "IQROutlierDetection")
 
-        return cleaned_data
+        X_train, X_test, y_train, y_test = DataSplitter().split(cleaned_data, "Global_active_power", "simple")
     
 if __name__ == "__main__":
     pass
