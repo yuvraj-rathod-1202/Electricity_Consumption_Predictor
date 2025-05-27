@@ -17,7 +17,7 @@ class InitialProcess():
         df = convert.convert(df, numeric_cols, "numeric")
         df = convert.convert(df, ['Date'], "datetime")
 
-        df['Datetime'] = df['Datetime'].dt.floor('H')
+        df['Datetime'] = df['Datetime'].dt.date
 
         agg_sum = df.groupby('Datetime')[[
             'Global_active_power', 
