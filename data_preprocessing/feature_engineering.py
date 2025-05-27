@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 
 import numpy as np
 import pandas as pd
-from sklearn.preprocessing import OneHotEncoder, MinMaxScaler, StandardScaler
+from sklearn.preprocessing import LabelEncoder, MinMaxScaler, StandardScaler
 
 class FeatureEngineeringStrategy(ABC):
     @abstractmethod
@@ -59,30 +59,23 @@ class MinMaxScalling(FeatureEngineeringStrategy):
         df_inverse[self._feature] = self.scaler.inverse_transform(df[[self._feature]])
         return df_inverse
 
-class OneHotEncodding(FeatureEngineeringStrategy):
+from sklearn.preprocessing import LabelEncoder
+
+class LabelEncoding(FeatureEngineeringStrategy):
     def __init__(self, feature):
         self._feature = feature
-        self.encoder = OneHotEncoder(drop="first", sparse_output=False)
+        self.encoder = LabelEncoder()
 
     def apply_transformation(self, df):
         df_transform = df.copy()
-        encoded_df = pd.DataFrame(
-            self.encoder.fit_transform(df[[self._feature]]),
-            columns=self.encoder.get_feature_names_out([self._feature]),
-            index=df.index
-        )
-        df_transform = df_transform.drop(columns=self._feature)
-        df_transform = pd.concat([df_transform, encoded_df], axis=1)
+        df_transform[self._feature] = self.encoder.fit_transform(df[self._feature])
         return df_transform
-    
+
     def inverse_transformation(self, df):
         df_inverse = df.copy()
-        encoded_columns = self.encoder.get_feature_names_out([self._feature])
-        encoded_data = df[encoded_columns]
-        original_feature = self.encoder.inverse_transform(encoded_data)
-        df_inverse[self._feature] = original_feature
-        df_inverse = df_inverse.drop(columns=encoded_columns)
+        df_inverse[self._feature] = self.encoder.inverse_transform(df[self._feature])
         return df_inverse
+
     
 
 class FeatureEngineer():
@@ -95,8 +88,8 @@ class FeatureEngineer():
                 self.transformers[type] = StandardScalling(feature)
             elif type == "MinMaxScalling":
                 self.transformers[type] = MinMaxScalling(feature)
-            elif type == "OneHotEncodding":
-                self.transformers[type] = OneHotEncodding(feature)
+            elif type == "LabelEncoding":
+                self.transformers[type] = LabelEncoding(feature)
             elif type == "LogTransformation":
                 self.transformers[type] = LogTransformation(feature)
             else:

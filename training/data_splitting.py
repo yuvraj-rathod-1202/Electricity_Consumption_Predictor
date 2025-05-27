@@ -21,7 +21,7 @@ class SimpleTrainTestSplit(DataSplittingStrategy):
             X, y, test_size=self.test_size, random_state=self.random_state, shuffle=True
         )
 
-        return X_train, X_test, y_train, y_test
+        return X, y, X_train, X_test, y_train, y_test
     
 class DataSplitter():
     def split(self, df, target_column, type):
